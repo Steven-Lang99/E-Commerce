@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   Tag.findAll({
     include: Product
   }).then(tag => {
-    res.send(tag.tag_name)
+    res.json(tag)
   })
   // find all tags
   // be sure to include its associated Product data
@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
     },
     include: Product
   }).then(tg => {
-    res.send(tg.tag_name)
+    res.send(tg)
   })
   // find a single tag by its `id`
   // be sure to include its associated Product data

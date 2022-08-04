@@ -8,25 +8,25 @@ router.get('/', (req, res) => {
     include: Product
   })
     .then(category => {
-      res.send(category)
+      console.log(category)
+      res.json(category)
     })
   // find all categories
   // be sure to include its associated Products
 });
 
 router.get('/:id', (req, res) => {
-  Category.findOne(req.params.id, {
+  Category.findByPk(req.params.id, {
     include: Product
   }).then(categor => {
-    res.send(categor)
+    res.json(categor)
   })
   // find one category by its `id` value
   // be sure to include its associated Products
 });
 
 router.post('/', (req, res) => {
-  const new_catergory_data = req.body;
-  Category.create(new_catergory_data)
+  Category.create(req.body)
     .then(new_catergory => {
       res.send(new_catergory)
     })

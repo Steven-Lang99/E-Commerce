@@ -12,9 +12,8 @@ Tag.init(
       primaryKey: true,
       allowNull: false
     },
-    tap_name: {
-      type: DataTypes.STRING
-
+    tag_name: {
+      type: DataTypes.STRING,
     },
   },
   {
