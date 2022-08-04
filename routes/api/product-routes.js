@@ -5,18 +5,36 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
+  Product.findAll({
+    include: Category, Tag
+  }).then(product => {
+    res.send(product)
+  })
   // find all products
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
+  Product.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: Category, Tag
+  }).then(prod => {
+    res.send(prod.product_name)
+  })
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
 
 // create new product
 router.post('/', (req, res) => {
+  const new_product_data = req.body;
+  Product.create(new_product_data)
+    .then(new_product => {
+      res.send(new_product)
+    })
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -90,6 +108,13 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+  Product.destroy(req.body, {
+    where: {
+      id: req.params.id
+    }
+  }).then(pro => {
+    res.send(pro)
+  })
   // delete one product by its `id` value
 });
 
