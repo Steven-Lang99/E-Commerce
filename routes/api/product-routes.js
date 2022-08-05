@@ -11,8 +11,6 @@ router.get('/', (req, res) => {
   }).then(product => {
     res.send(product)
   })
-  // find all products
-  // be sure to include its associated Category and Tag data
 });
 
 // get one product
@@ -26,26 +24,17 @@ router.get('/:id', (req, res) => {
   }).then(prod => {
     res.send(prod)
   })
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
 });
 
 // create new product
 router.post('/', (req, res) => {
-  const new_product_data = req.body;
-  Product.create(new_product_data)
-    .then(new_product => {
-      res.send(new_product)
-    })
-  /* req.body should look like this...
-    {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
-    }
-  */
-  Product.create(req.body)
+  Product.create({
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock: req.body.stock,
+    tagIds: req.body.tagIds
+
+  })
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
@@ -108,16 +97,16 @@ router.put('/:id', (req, res) => {
       res.status(400).json(err);
     });
 });
-
+//delete product
 router.delete('/:id', (req, res) => {
-  Product.destroy(req.body, {
+  Product.destroy({
     where: {
       id: req.params.id
     }
   }).then(pro => {
-    res.send(pro)
+    res.json(pro)
   })
-  // delete one product by its `id` value
+
 });
 
 module.exports = router;

@@ -11,8 +11,6 @@ router.get('/', (req, res) => {
       console.log(category)
       res.json(category)
     })
-  // find all categories
-  // be sure to include its associated Products
 });
 
 router.get('/:id', (req, res) => {
@@ -21,38 +19,38 @@ router.get('/:id', (req, res) => {
   }).then(categor => {
     res.json(categor)
   })
-  // find one category by its `id` value
-  // be sure to include its associated Products
 });
-
+// create a new category
 router.post('/', (req, res) => {
-  Category.create(req.body)
+  Category.create({
+    category_name: req.body.category_name
+  })
     .then(new_catergory => {
-      res.send(new_catergory)
+      res.json(new_catergory)
     })
-  // create a new category
-});
 
+});
+// update a category 
 router.put('/:id', (req, res) => {
   Category.update(req.body, {
     where: {
       id: req.params.id
     },
   }).then(cater => {
-    res.send(cater)
+    res.json(cater)
   })
-  // update a category by its `id` value
-});
 
+});
+// delete a category 
 router.delete('/:id', (req, res) => {
-  Category.destroy(req.body, {
+  Category.destroy({
     where: {
       id: req.params.id
     }
   }).then(cat => {
-    res.send(cat)
+    res.json(cat)
   })
-  // delete a category by its `id` value
+
 });
 
 module.exports = router;

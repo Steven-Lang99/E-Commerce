@@ -9,8 +9,6 @@ router.get('/', (req, res) => {
   }).then(tag => {
     res.json(tag)
   })
-  // find all tags
-  // be sure to include its associated Product data
 });
 
 router.get('/:id', (req, res) => {
@@ -20,41 +18,37 @@ router.get('/:id', (req, res) => {
     },
     include: Product
   }).then(tg => {
-    res.send(tg)
+    res.json(tg)
   })
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
 });
-
+// create a new tag
 router.post('/', (req, res) => {
-  const new_tag_data = req.body;
-  Tag.create(new_tag_data)
+  Tag.create({
+    tag_name: req.body.tag_name
+  })
     .then(new_tag => {
-      res.send(new_tag)
+      res.json(new_tag)
     })
-  // create a new tag
 });
-
+// update a tag's name 
 router.put('/:id', (req, res) => {
   Tag.update(req.body, {
     where: {
       id: req.params.id
     }
   }).then(ta => {
-    res.send(ta)
+    res.json(ta)
   })
-  // update a tag's name by its `id` value
 });
-
+// delete on tag 
 router.delete('/:id', (req, res) => {
-  Tag.destroy(req.body, {
+  Tag.destroy({
     where: {
       id: req.params.id
     }
   }).then(tgs => {
-    res.send(tgs)
+    res.json(tgs)
   })
-  // delete on tag by its `id` value
 });
 
 module.exports = router;
